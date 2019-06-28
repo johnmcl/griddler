@@ -101,7 +101,7 @@ module Griddler
     end
 
     def extract_body
-      EmailParser.extract_reply_body(text_or_sanitized_html)
+      EmailParser.extract_reply_body(sanitized_html_or_text)
     end
 
     def extract_headers
@@ -118,9 +118,9 @@ module Griddler
       EmailParser.extract_cc(headers)
     end
 
-    def text_or_sanitized_html
+    def sanitized_html_or_text
       text = clean_text(params.fetch(:text, ''))
-      text.presence || clean_html(params.fetch(:html, '')).presence
+      clean_html(params.fetch(:html, '')).presence || text.presence
     end
 
     def clean_text(text)
